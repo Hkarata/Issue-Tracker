@@ -1,15 +1,15 @@
 // src/components/SignIn.tsx
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import AuthenticationService from '../services/AuthenticationService.ts';
+import { useNavigate } from 'react-router-dom';
+import AuthenticationService from '../services/AuthenticationService';
 
 const SignIn: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSignIn = () => {
         const token = 'your_token'; // Replace with actual token logic
-        AuthService.signIn(token);
-        history.push('/'); // Redirect to main application
+        AuthenticationService.signIn(token);
+        navigate('/'); // Redirect to main application
     };
 
     return (

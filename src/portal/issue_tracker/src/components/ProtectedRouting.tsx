@@ -1,27 +1,26 @@
 // src/components/ProtectedRoute.tsx
 import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
-import AuthService from '../services/AuthService';
+import { Route, Navigate, RouteProps } from 'react-router-dom';
+import AuthenticationService from '../services/AuthenticationService';
 
 interface ProtectedRouteProps extends RouteProps {
     children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, ...rest }) => {
-    const isAuthenticated = AuthService.isAuthenticated();
+    const isAuthenticated = AuthenticationService.isAuthenticated();
 
     return (
         <Route
             {...rest}
-            render={({ location }) =>
+            element={
                 isAuthenticated ? (
                     children
                 ) : (
-                    <Redirect
-                        to={{
-                            pathname: '/sign-in',
-                            state: { from: location },
-                        }}
+                    <Navigate
+                        to="/sign-in"
+                        replace
+                        state={{ from: rest.location }} // Passing location state for redirection
                     />
                 )
             }
